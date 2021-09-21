@@ -2,20 +2,27 @@
 
 namespace App\Http\Middleware;
 
+use Socialite;
+
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
 {
     /**
-     * Get the path the user should be redirected to when they are not authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string|null
+     * {@inheritdoc}
      */
+    protected function authenticate($request, array $guards)
+    {
+        if (session()->missing('user')) {
+            $this->unauthenticated($request, $guards);
+        }
+    }
+
+    /**
+    * {@inheritdoc}
+    */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
-            return route('login');
-        }
+        return Socialite::driver('uacf')->redirect()->getTargetUrl();
     }
 }

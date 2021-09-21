@@ -14,13 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return Socialite::driver('uacf')->redirect();
-});
+Route::get('', App\Http\Livewire\ShowWorkouts::class)->middleware('auth');
 
 Route::get('callback', function () {
-    $user = Socialite::driver('uacf')->user();
-    return Http::withHeaders([
-        'Authorization' => "Bearer {$user->token}",
-    ])->get('https://api.ua.com/v7.1/workout', ['user' => $user->id, 'order_by' => '-start_datetime']);
+    session(['user' => Socialite::driver('uacf')->user()]);
+    return redirect('');
 });
