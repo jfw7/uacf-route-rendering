@@ -16,6 +16,7 @@
         "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.6",
+        "sibyx/phpgpx": "@RC",
         "socialiteproviders/generators": "^4.6",
         "socialiteproviders/manager": "^4.0"
     },
